@@ -1,0 +1,52 @@
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <sstream>
+using namespace std;
+
+class Num_Base {
+private:
+ int num;
+public:
+ // 設定數字
+ void setno(int n) {
+  num = n;
+ }
+ // 輸出 num 若以 b 進位表示的十進位數字值
+ wstring base(int b) const {
+  int k;
+  wstringstream a;
+  k = num % 10 + num / 10 * b;
+  a << k;
+  wstring str = a.str(); 
+  char c = '*';
+  wstringstream s;
+  s << c;
+  wstring star = s.str();
+  if (num / 10 >= b || num % 10 >= b) {
+   return star;
+  }
+  else {
+   return str;
+  }
+ };
+};
+
+int main() {
+ setlocale(LC_ALL, "zh_TW.UTF-8");
+ Num_Base no;
+ wcout << setw(4) << " ";
+ for (int b = 2; b <= 12; ++b) {
+  wcout << setw(2) << b << L"進位";
+ }
+ wcout << endl;
+
+ for (int n = 10; n <= 40; ++n) {
+  no.setno(n);
+  wcout << setw(2) << n;
+  for (int b = 2; b <= 12; ++b) {
+   wcout << setw(6) << no.base(b);
+  }
+  wcout << endl;
+ }
+}
